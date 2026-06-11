@@ -151,7 +151,11 @@ document.addEventListener('click', e => {
 });
 
 window.addEventListener('hashchange', () => handleRoute(window.location.hash.substring(1)));
-overlay.addEventListener('click', closeAll);
+overlay.addEventListener('click', () => {
+    if (navLinks.classList.contains('active')) {
+        closeMobileMenu();
+    }
+});
 
 // Привязка обработчиков к статическим элементам
 document.getElementById('searchBtn')?.addEventListener('click', () => {
@@ -177,6 +181,7 @@ document.getElementById('showRegisterLink')?.addEventListener('click', e => { e.
 document.getElementById('showLoginLink')?.addEventListener('click', e => { e.preventDefault(); showLoginForm(); });
 themeToggle.addEventListener('click', toggleTheme);
 menuToggle.addEventListener('click', () => {
+    console.log('menuToggle clicked');   // временный лог для проверки
     navLinks.classList.toggle('active');
     overlay.classList.toggle('active');
 });
