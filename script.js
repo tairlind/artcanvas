@@ -154,6 +154,19 @@ document.addEventListener('click', e => {
     }
 });
 
+// Раскрытие подменю "Каталог" в мобильном меню
+document.addEventListener('click', (e) => {
+
+    if (window.innerWidth > 768) return;
+
+    const dropdownLink = e.target.closest('.dropdown > a');
+    if (!dropdownLink) return;
+
+    e.preventDefault();
+    const parentLi = dropdownLink.parentElement;
+    parentLi.classList.toggle('active');
+});
+
 window.addEventListener('hashchange', () => handleRoute(window.location.hash.substring(1)));
 
 
