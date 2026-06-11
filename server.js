@@ -101,6 +101,37 @@ db.exec(`
 try { db.exec(`ALTER TABLE Users ADD COLUMN Theme TEXT DEFAULT 'light'`); } catch (e) { /* поле уже есть */ }
 try { db.exec(`ALTER TABLE Orders ADD COLUMN CustomerBio TEXT DEFAULT ''`); } catch (e) { /* поле уже есть */ }
 
+// Автоматический импорт товаров, если база пуста
+const productsCount = db.prepare('SELECT COUNT(*) AS count FROM Products').get().count;
+if (productsCount === 0) {
+    console.log('База пуста – выполняю импорт товаров...');
+    try {
+        const PRODUCTS_DATA = require('./products-data.js');
+        const insertCategory = db.prepare('INSERT INTO Categories (Name) VALUES (?)');
+        const insertProduct = db.prepare(`
+            INSERT INTO Products (Id, CategoryId, Title, Price, OldPrice, Image, Images, Description, Features, Rating, ReviewsCount, Stock, Tags)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        `);
+
+        for (const [categoryName, products] of Object.entries(PRODUCTS_DATA)) {
+            const catInfo = insertCategory.run(categoryName);
+            const categoryId = catInfo.lastInsertRowid;
+            for (const product of products) {
+                insertProduct.run(
+                    product.id, categoryId, product.title, product.price, product.oldPrice || null,
+                    product.image, JSON.stringify(product.images), product.description,
+                    JSON.stringify(product.features || []), product.rating || 0,
+                    product.reviewsCount || 0, product.stock || 0, JSON.stringify(product.tags || [])
+                );
+            }
+            console.log(`Категория "${categoryName}" загружена.`);
+        }
+        console.log('Импорт завершён.');
+    } catch (err) {
+        console.error('Ошибка автоматического импорта:', err.message);
+    }
+}
+
 // Middleware
 app.use(cors());
 app.use(express.json());
