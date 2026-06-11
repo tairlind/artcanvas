@@ -80,6 +80,7 @@ function closeAll() {
 function closeMobileMenu() {
     navLinks.classList.remove('active');
     overlay.classList.remove('active');
+    overlay.style.zIndex = ''; 
 }
 
 // Роутер
@@ -181,10 +182,15 @@ document.getElementById('showRegisterLink')?.addEventListener('click', e => { e.
 document.getElementById('showLoginLink')?.addEventListener('click', e => { e.preventDefault(); showLoginForm(); });
 themeToggle.addEventListener('click', toggleTheme);
 menuToggle.addEventListener('click', (e) => {
-    e.stopPropagation(); 
-    console.log('menuToggle clicked');
-    navLinks.classList.toggle('active');
-    overlay.classList.toggle('active');
+    e.stopPropagation();
+    const isOpen = navLinks.classList.toggle('active');
+    if (isOpen) {
+        overlay.classList.add('active');
+        overlay.style.zIndex = '999';
+    } else {
+        overlay.classList.remove('active');
+        overlay.style.zIndex = ''; 
+    }
 });
 
 // Тема оформления
