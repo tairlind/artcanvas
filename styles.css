@@ -2212,7 +2212,7 @@ body.dark-theme .loading-overlay p {
         flex-direction: column;
         padding: 20px;
         transition: left 0.3s ease;
-        z-index: 999;
+        z-index: 1001;
         box-shadow: var(--shadow);
     }
 
@@ -2316,7 +2316,7 @@ body.dark-theme .loading-overlay p {
 @media (max-width: 480px) {
     .category-grid,
     .product-grid {
-        grid-template-columns: 1fr;
+        grid-template-columns: repeat(2, 1fr);
     }
 
     .product-actions {
