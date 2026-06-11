@@ -100,6 +100,7 @@ db.exec(`
 // Миграции: добавление новых полей в существующие таблицы
 try { db.exec(`ALTER TABLE Users ADD COLUMN Theme TEXT DEFAULT 'light'`); } catch (e) { /* поле уже есть */ }
 try { db.exec(`ALTER TABLE Orders ADD COLUMN CustomerBio TEXT DEFAULT ''`); } catch (e) { /* поле уже есть */ }
+try { db.exec(`ALTER TABLE Users ADD COLUMN Role TEXT DEFAULT 'user'`); } catch (e) { /* поле уже есть */ }
 
 // Автоматический импорт товаров, если база пуста
 const productsCount = db.prepare('SELECT COUNT(*) AS count FROM Products').get().count;
