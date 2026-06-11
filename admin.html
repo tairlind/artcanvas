@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Админ-панель ArtCanvas</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .admin-container { max-width: 1200px; margin: 20px auto; padding: 0 20px; }
+        .admin-tabs { display: flex; gap: 10px; margin-bottom: 20px; }
+        .admin-tab { padding: 10px 20px; background: var(--light); border: none; border-radius: var(--radius-sm); cursor: pointer; font-weight: 500; }
+        .admin-tab.active { background: var(--primary); color: #fff; }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th, td { padding: 10px; border-bottom: 1px solid var(--light-gray); text-align: left; }
+        .btn { padding: 6px 12px; font-size: 13px; }
+        .form-panel { background: var(--white); padding: 20px; border-radius: var(--radius); box-shadow: var(--shadow); margin-bottom: 20px; }
+        .form-panel h3 { margin-bottom: 15px; }
+    </style>
+</head>
+<body>
+    <div class="admin-container">
+        <h1 style="margin: 20px 0;">Админ-панель</h1>
+        <button class="btn btn-outline" id="logoutAdminBtn" style="float:right;">Выйти</button>
+
+        <div class="admin-tabs">
+            <button class="admin-tab active" data-tab="products">Товары</button>
+            <button class="admin-tab" data-tab="orders">Заказы</button>
+        </div>
+
+        <!-- Управление товарами -->
+        <div id="productsPanel" class="tab-content">
+            <button class="btn btn-primary" id="addProductBtn">Добавить товар</button>
+            <table id="productsTable">
+                <thead><tr><th>ID</th><th>Название</th><th>Цена</th><th>Категория</th><th>Действия</th></tr></thead>
+                <tbody></tbody>
+            </table>
+        </div>
+
+        <!-- Управление заказами -->
+        <div id="ordersPanel" class="tab-content" style="display:none;">
+            <table id="ordersTable">
+                <thead><tr><th>ID</th><th>Покупатель</th><th>Дата</th><th>Сумма</th><th>Статус</th><th>Действия</th></tr></thead>
+                <tbody></tbody>
+            </table>
+        </div>
+
+        <!-- Модальное окно для товара -->
+        <div id="productModal" class="modal" style="display:none;">
+            <div class="modal-content" style="max-width:600px;">
+                <div class="modal-header"><h3>Товар</h3><span class="close-modal" id="closeModalBtn">&times;</span></div>
+                <div class="modal-body" id="productFormContainer"></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="api.js"></script>
+    <script src="admin.js"></script>
+</body>
+</html>

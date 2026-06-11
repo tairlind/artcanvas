@@ -1,0 +1,7 @@
+node_modules/
+artcanvas.db
+artcanvas.db-shm
+artcanvas.db-wal
+.history
+.snapshots
+*.ps1
