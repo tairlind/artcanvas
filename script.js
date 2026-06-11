@@ -393,6 +393,12 @@ function updateCartCounter() {
     const total = cart.reduce((s, i) => s + i.quantity, 0);
     cartCounter.textContent = total;
     cartCounter.style.display = total > 0 ? 'flex' : 'none';
+
+    const mobileCounter = document.getElementById('mobileCartCounter');
+    if (mobileCounter) {
+        mobileCounter.textContent = total;
+        mobileCounter.style.display = total > 0 ? 'flex' : 'none';
+    }
 }
 
 function toggleCart() {
@@ -1499,6 +1505,27 @@ async function printUserOrder(orderId) {
 
 // Инициализация
 document.addEventListener('DOMContentLoaded', async () => {
+    function setActiveMobileNav() {
+        const hash = window.location.hash.substring(1) || '/home';
+        document.querySelectorAll('.mobile-nav-item').forEach(item => {
+            const route = item.dataset.route;
+            item.classList.remove('active');
+            if (route && hash.startsWith(route.replace(/\/$/, ''))) {
+                item.classList.add('active');
+            }
+        });
+        if (hash === '/checkout' || cartSidebar.classList.contains('open')) {
+            document.getElementById('mobileCartBtn')?.classList.add('active');
+        }
+    }
+
+    document.getElementById('mobileCartBtn')?.addEventListener('click', (e) => {
+    e.preventDefault();
+    toggleCart();
+    });
+
+    window.addEventListener('hashchange', setActiveMobileNav);
+    setActiveMobileNav();
     initTheme();
     try {
         await checkUserSession();

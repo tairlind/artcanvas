@@ -276,5 +276,26 @@
     <!-- Скрипты -->
     <script src="api.js"></script>
     <script src="script.js"></script>
+
+    <!-- Нижняя мобильная навигация -->
+    <nav class="mobile-nav" id="mobileNav">
+        <a href="#/home" class="mobile-nav-item" data-route="/home">
+            <i class="fas fa-home"></i>
+            <span>Главная</span>
+        </a>
+        <a href="#/catalog" class="mobile-nav-item" data-route="/catalog">
+            <i class="fas fa-th-large"></i>
+            <span>Каталог</span>
+        </a>
+        <a href="#" class="mobile-nav-item" id="mobileCartBtn">
+            <i class="fas fa-shopping-cart"></i>
+            <span>Корзина</span>
+            <span class="mobile-cart-counter" id="mobileCartCounter" style="display:none;">0</span>
+        </a>
+        <a href="#/profile" class="mobile-nav-item" data-route="/profile">
+            <i class="fas fa-user"></i>
+            <span>Профиль</span>
+        </a>
+    </nav>
   </body>
 </html>
