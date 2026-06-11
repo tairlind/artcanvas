@@ -132,6 +132,18 @@ if (productsCount === 0) {
     }
 }
 
+// Автоматическое создание администратора, если его нет
+const adminExists = db.prepare('SELECT Id FROM Users WHERE Role = ?').get('admin');
+if (!adminExists) {
+    const bcrypt = require('bcryptjs');
+    const adminEmail = 'admin@gmail.com';
+    const adminPassword = 'admin123';
+    const adminName = 'Admin';
+    const hash = bcrypt.hashSync(adminPassword, 10);
+    db.prepare('INSERT INTO Users (Name, Email, PasswordHash, Role) VALUES (?, ?, ?, ?)').run(adminName, adminEmail, hash, 'admin');
+    console.log('Администратор создан: admin@gmail.com / admin123');
+}
+
 // Middleware
 app.use(cors());
 app.use(express.json());
