@@ -180,8 +180,9 @@ document.getElementById('registerBtn')?.addEventListener('click', register);
 document.getElementById('showRegisterLink')?.addEventListener('click', e => { e.preventDefault(); showRegisterForm(); });
 document.getElementById('showLoginLink')?.addEventListener('click', e => { e.preventDefault(); showLoginForm(); });
 themeToggle.addEventListener('click', toggleTheme);
-menuToggle.addEventListener('click', () => {
-    console.log('menuToggle clicked');   // временный лог для проверки
+menuToggle.addEventListener('click', (e) => {
+    e.stopPropagation(); 
+    console.log('menuToggle clicked');
     navLinks.classList.toggle('active');
     overlay.classList.toggle('active');
 });
