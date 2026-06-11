@@ -80,8 +80,7 @@ function closeAll() {
 function closeMobileMenu() {
     navLinks.classList.remove('active');
     document.body.classList.remove('menu-open');
-    overlay.style.pointerEvents = '';
-    overlay.style.zIndex = '';
+    overlay.style.display = '';
 }
 
 // Роутер
@@ -187,11 +186,9 @@ menuToggle.addEventListener('click', (e) => {
     document.body.classList.toggle('menu-open', isOpen);
 
     if (isOpen) {
-        overlay.style.pointerEvents = 'none';
-        overlay.style.zIndex = '999';
+        overlay.style.display = 'none';
     } else {
-        overlay.style.pointerEvents = '';
-        overlay.style.zIndex = '';
+        overlay.style.display = '';
     }
 });
 
