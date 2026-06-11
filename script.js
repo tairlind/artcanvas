@@ -79,8 +79,7 @@ function closeAll() {
 
 function closeMobileMenu() {
     navLinks.classList.remove('active');
-    overlay.classList.remove('active');
-    overlay.style.zIndex = ''; 
+    document.body.classList.remove('menu-open');
 }
 
 // Роутер
@@ -133,6 +132,9 @@ function handleRoute(path) {
 
 // Делегирование кликов (навигация и управление корзиной)
 document.addEventListener('click', e => {
+    if (navLinks.classList.contains('active') && e.target === navLinks) {
+        closeMobileMenu();
+    }
     const link = e.target.closest('a[href^="#/"]');
     if (link) { e.preventDefault(); navigate(link.getAttribute('href').substring(1)); return; }
     const routeEl = e.target.closest('[data-route]');
@@ -152,11 +154,7 @@ document.addEventListener('click', e => {
 });
 
 window.addEventListener('hashchange', () => handleRoute(window.location.hash.substring(1)));
-overlay.addEventListener('click', () => {
-    if (navLinks.classList.contains('active')) {
-        closeMobileMenu();
-    }
-});
+
 
 // Привязка обработчиков к статическим элементам
 document.getElementById('searchBtn')?.addEventListener('click', () => {
@@ -183,14 +181,8 @@ document.getElementById('showLoginLink')?.addEventListener('click', e => { e.pre
 themeToggle.addEventListener('click', toggleTheme);
 menuToggle.addEventListener('click', (e) => {
     e.stopPropagation();
-    const isOpen = navLinks.classList.toggle('active');
-    if (isOpen) {
-        overlay.classList.add('active');
-        overlay.style.zIndex = '999';
-    } else {
-        overlay.classList.remove('active');
-        overlay.style.zIndex = ''; 
-    }
+    navLinks.classList.toggle('active');
+    document.body.classList.toggle('menu-open', navLinks.classList.contains('active'));
 });
 
 // Тема оформления
@@ -1542,7 +1534,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     try {
         await checkUserSession();
     } catch (e) {
-        // Пользователь не авторизован — это нормально
+        // Пользователь не авторизован - это нормально
     }
     updateCartCounter();
     bindDynamicCartButtons();

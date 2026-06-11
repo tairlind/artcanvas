@@ -1933,6 +1933,21 @@ body.dark-theme .loading-overlay p {
 
 /* Показываем панель только на мобильных */
 @media (max-width: 768px) {
+    .nav-links.active::before {
+        content: '';
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+        z-index: -1;               /* позади меню, но над контентом */
+    }
+
+    body.menu-open .overlay {
+        pointer-events: none;      /* или можно скрыть, но для корзины оставить */
+    }
+
     .mobile-nav {
         display: flex;
     }
